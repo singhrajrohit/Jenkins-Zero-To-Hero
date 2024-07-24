@@ -22,7 +22,7 @@ pipeline {
         //git branch: 'main', url: 'https://github.com/singhrajrohit/Jenkins-Zero-To-Hero.git'
       }
     }
-    /*stage('Build and Test') {
+    stage('Build and Test') {
       steps {
         sh 'ls -ltr'
         // build the project and create a JAR file
@@ -54,7 +54,7 @@ pipeline {
             }
         }
       }
-    }*/
+    }
   stage('Update File') {
       
       steps {
