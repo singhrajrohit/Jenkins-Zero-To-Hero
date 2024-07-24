@@ -8,7 +8,7 @@ pipeline {
   environment {
             GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
             GIT_USER_NAME = "singhrajrohit"
-            NEW_IMAGE_NAME= "singrajrohit/ultimate-cicd:${BUILD_NUMBER}"
+            NEW_IMAGE_NAME= "singhrajrohit/ultimate-cicd:${BUILD_NUMBER}"
         }
   stages {
     /*stage('clean workspace'){
