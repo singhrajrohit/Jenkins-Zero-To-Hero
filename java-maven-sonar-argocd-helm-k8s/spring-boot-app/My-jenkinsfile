@@ -58,7 +58,7 @@ pipeline {
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-              script{
+      
                 sh '''
                     git config user.email "rajr32959@gmail.com"
                     git config user.name "singhrajrohit"
@@ -68,7 +68,6 @@ pipeline {
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                 '''
             }
-          }
         }
     }
   }
