@@ -55,14 +55,28 @@ pipeline {
         }
       }
     }*/
-    stage('Update Deployment File') {
+  stage('Update File') {
+      
+      steps {
+          script {
+              def BUILD_NUMBER = env.BUILD_NUMBER ?: '1' 
+                  sh """
+                    echo "Replacing ${BUILD_NUMBER-1} with ${BUILD_NUMBER} in deployment.yml"
+                    sed -i 's|image: .*|image: $NEW_IMAGE_NAME|' java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                        
+                    # Show updated file content
+                    cat java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                   """
+                }
+            }
+    }
+    stage('commit and push') {
         steps {
           script{
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
                     git config user.email "rajr32959@gmail.com"
                     git config user.name "singhrajrohit"
-                    sed -i 's|image: .*|image: $NEW_IMAGE_NAME|' java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
